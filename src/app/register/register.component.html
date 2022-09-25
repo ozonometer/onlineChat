@@ -1,0 +1,19 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <!-- Register Form -->
+    <form>
+      <input type="text" id="first" class="fadeIn second" name="first" placeholder="First Name" [(ngModel)]='firstName'>
+      <input type="text" id="last" class="fadeIn third" name="last" placeholder="Last Name" [(ngModel)]='lastName'>
+      <input type="text" id="user" class="fadeIn third" name="user" placeholder="User Name" [(ngModel)]='userName'>
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password" [(ngModel)]='password'>
+      <input type="submit" class="fadeIn fourth" value="Register User" (click)="createUser()">
+    </form>
+
+    <!-- Login -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Login</a>
+    </div>
+
+  </div>
+</div>
