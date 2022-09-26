@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../service/http.service";
 import {Router} from "@angular/router";
 import {NewUserModel} from "../model/NewUserModel";
+import {ToastWrapper} from "../model/ToastWrapper";
+import {ToastType} from "../model/ToastType";
+import {HttpErrorResponse} from "../model/HttpErrorResponse";
+import {ToastService} from "../service/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +18,7 @@ export class RegisterComponent implements OnInit {
   userName: string;
   password: string;
 
-  constructor(private httpService: HttpService, private router: Router) { }
+  constructor(private httpService: HttpService, private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
   }
@@ -26,13 +30,15 @@ export class RegisterComponent implements OnInit {
     userName: this.userName,
     password: this.password
     }
+    this.toastService.clearToastMessages();
       this.httpService.postNewUser(newUser).then(response => {
-        console.log('Create new User');
         console.log(response);
         this.router.navigate(['/login']);
-      }, error => {
-        console.log('Error during user authentication! ');
-        console.log(error);
+        this.toastService.emmitToast(new ToastWrapper(ToastType.SUCCESS, new HttpErrorResponse(),
+          'User created successfully. Please login.'))
+      }, err => {
+        this.toastService.clearToastMessages();
+        this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
       })
   }
 }

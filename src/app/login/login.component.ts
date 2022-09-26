@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../service/http.service";
 import {AuthResponse} from "../model/AuthResponse";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {ToastService} from '../service/toast.service';
+import {ToastWrapper} from '../model/ToastWrapper';
+import {ToastType} from '../model/ToastType';
+import {HttpErrorResponse} from "../model/HttpErrorResponse";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,7 @@ export class LoginComponent implements OnInit {
   password: string;
 
   private authResponse: AuthResponse;
-  constructor(private httpService: HttpService, private router: Router) {
+  constructor(private httpService: HttpService, private router: Router, private toastService: ToastService) {
 
   }
 
@@ -21,13 +25,16 @@ export class LoginComponent implements OnInit {
   }
 
   userLogin() {
+    this.toastService.clearToastMessages();
     this.httpService.postAuthenticateUser(this.username, this.password).then(response => {
       this.authResponse = response!;
-      this.httpService.setToken(this.authResponse.token)
+      this.httpService.setToken(this.authResponse.token);
       this.router.navigate(['/home']);
-    }, error => {
-      console.log('Error during user authentication!');
-      console.log(error);
+      this.toastService.emmitToast(new ToastWrapper(ToastType.SUCCESS, new HttpErrorResponse(),
+        'Login Successful'))
+    }, err => {
+      this.toastService.clearToastMessages();
+      this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
     })
   }
 }
