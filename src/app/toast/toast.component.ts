@@ -23,11 +23,15 @@ export class ToastComponent implements OnInit {
       if (toast.type === ToastType.ERROR) {
         if (toast.response.status === 401) {
           this.errors.push('Invalid password or user name!');
+        } else if (toast.response.status === 403) {
+          this.errors.push('Authentication failed! Please login again.');
         } else if (toast.response.status === 406) {
           this.errors.push('Username already in use!');
         } else {
-          for(let err in toast.response.error.errors){
-            this.errors.push(toast.response.error.errors[err].defaultMessage);
+          if (toast.response.error.errors) {
+            for(let err in toast.response.error.errors){
+              this.errors.push(toast.response.error.errors[err].defaultMessage);
+            }
           }
         }
       } else if (toast.type === ToastType.SUCCESS) {

@@ -10,21 +10,40 @@ import {NewUserModel} from "../model/NewUserModel";
 
 @Injectable( {providedIn: 'root'})
 export class HttpService {
-  private jwtToken;
 
   constructor(private http: HttpClient) {
-    this.jwtToken = '';
   }
 
   setToken(val: string){
-    this.jwtToken = val;
+    localStorage.setItem('jwtToken', val);
+    if (val.length > 130) {
+      localStorage.setItem('loggedIn', 'true');
+    }
   }
 
   getToken(){
-    return this.jwtToken;
+    return localStorage.getItem('jwtToken');
   }
 
-/*
+
+  isLoggedIn(): boolean {
+    let logged = localStorage.getItem('loggedIn');
+    return logged === 'true';
+  }
+
+  getUserId(): number {
+    let userId = localStorage.getItem('userId');
+    if (userId) {
+      return Number(userId);
+    }
+    return 0;
+  }
+
+  setUserId(id: number) {
+    localStorage.setItem('userId', String(id));
+  }
+
+  /*
   getRequest(path: string): Observable<{}> {
       return this.http.get(environment.url + path);
   }
@@ -63,7 +82,7 @@ export class HttpService {
    * GET list of all users
    */
   async getAllUsers(){
-    const headers = new HttpHeaders({Authorization: 'Token ' + this.jwtToken})
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.get(environment.url + '/users', {headers})
       .pipe(map( res => res as Array<UserModel>)).toPromise().then( data => {
         return data;
@@ -73,10 +92,22 @@ export class HttpService {
   /**
    * GET user by id
    */
-  /*async getUser(id: number){
-    return this.http.get(environment.url + '/user/' + id)
+  async getUser(){
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/user/' + this.getUserId(), {headers})
       .pipe(map( res => res as UserModel)).toPromise().then( data => {
         return data;
       });
-  }*/
+  }
+
+  /**
+   * POST update existing user
+   */
+  async postUpdateUser(user: UserModel){
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.post(environment.url + '/updateUser', user, {headers})
+      .pipe(map( res => res as UserModel)).toPromise().then( data => {
+        return data;
+      });
+  }
 }

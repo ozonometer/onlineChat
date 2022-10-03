@@ -29,9 +29,10 @@ export class LoginComponent implements OnInit {
     this.httpService.postAuthenticateUser(this.username, this.password).then(response => {
       this.authResponse = response!;
       this.httpService.setToken(this.authResponse.token);
+      this.httpService.setUserId(this.authResponse.userId);
       this.router.navigate(['/home']);
       this.toastService.emmitToast(new ToastWrapper(ToastType.SUCCESS, new HttpErrorResponse(),
-        'Login Successful'))
+        'Login Successful'));
     }, err => {
       this.toastService.clearToastMessages();
       this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
