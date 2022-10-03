@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ToastComponent } from './toast/toast.component';
 import { ToastService } from './service/toast.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ToastService } from './service/toast.service';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ToastComponent
+    ToastComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
