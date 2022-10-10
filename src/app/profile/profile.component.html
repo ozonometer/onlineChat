@@ -1,6 +1,22 @@
 <form>
   <div class="form-row">
     <div class="col-md-4 mb-3">
+      <div *ngIf="imageId">
+        <img style="background-color: #cccccc" height="348" width="348" src="data:image/png;base64, {{userImage}}"
+             alt="Profile Picture" class="img-thumbnail">
+        <button type="button" class="p-2 btn btn-dark" (click)="deleteImage()">Delete Image</button>
+      </div>
+      <div *ngIf="!imageId">
+        <img src="../../assets/avatar.png" height="348" width="348" class="img-thumbnail" alt="Add Profile Picture">
+        <button type="button" class="p-2 btn btn-dark" (click)="imageSelect.click()">Add Image</button>
+        <input
+          style="display: none"
+          type="file"
+          (change)="addImage($event)"
+          #imageSelect>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
       <label for="profileFirst">First name</label>
       <input [(ngModel)]="user.firstName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileFirst" required>
     </div>

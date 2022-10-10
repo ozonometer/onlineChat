@@ -7,6 +7,7 @@ import {UserModel} from '../model/UserModel';
 import {AuthRequest} from "../model/AuthRequest";
 import {AuthResponse} from "../model/AuthResponse";
 import {NewUserModel} from "../model/NewUserModel";
+import {Image} from "../model/Image";
 
 @Injectable( {providedIn: 'root'})
 export class HttpService {
@@ -14,14 +15,14 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  setToken(val: string){
+  setToken(val: string) {
     localStorage.setItem('jwtToken', val);
     if (val.length > 130) {
       localStorage.setItem('loggedIn', 'true');
     }
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('jwtToken');
   }
 
@@ -56,13 +57,13 @@ export class HttpService {
   /**
    * POST to authenticate user
    */
-  async postAuthenticateUser(username: string, pass: string){
+  async postAuthenticateUser(username: string, pass: string) {
     let authRequest: AuthRequest = {
       userName: username,
       password: pass
     }
     return this.http.post(environment.url + '/authenticate', authRequest)
-      .pipe(map( res => res as AuthResponse)).toPromise().then( data => {
+      .pipe(map(res => res as AuthResponse)).toPromise().then(data => {
         console.log(data);
         return data;
       });
@@ -71,20 +72,20 @@ export class HttpService {
   /**
    * POST to create new user
    */
-  async postNewUser(newUser: NewUserModel){
+  async postNewUser(newUser: NewUserModel) {
     return this.http.post(environment.url + '/createUser', newUser)
-      .pipe(map( res => res as UserModel)).toPromise().then( data => {
-      return data;
-    });
+      .pipe(map(res => res as UserModel)).toPromise().then(data => {
+        return data;
+      });
   }
 
   /**
    * GET list of all users
    */
-  async getAllUsers(){
+  async getAllUsers() {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.get(environment.url + '/users', {headers})
-      .pipe(map( res => res as Array<UserModel>)).toPromise().then( data => {
+      .pipe(map(res => res as Array<UserModel>)).toPromise().then(data => {
         return data;
       });
   }
@@ -92,10 +93,10 @@ export class HttpService {
   /**
    * GET user by id
    */
-  async getUser(){
+  async getUser() {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.get(environment.url + '/user/' + this.getUserId(), {headers})
-      .pipe(map( res => res as UserModel)).toPromise().then( data => {
+      .pipe(map(res => res as UserModel)).toPromise().then(data => {
         return data;
       });
   }
@@ -103,10 +104,43 @@ export class HttpService {
   /**
    * POST update existing user
    */
-  async postUpdateUser(user: UserModel){
+  async postUpdateUser(user: UserModel) {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.post(environment.url + '/updateUser', user, {headers})
-      .pipe(map( res => res as UserModel)).toPromise().then( data => {
+      .pipe(map(res => res as UserModel)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  /**
+   * POST to upload image
+   */
+  async uploadMultipartFile(file: File, type: string): Promise<Object | undefined> {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    const fd = new FormData();
+    fd.append(type, file, file.name);
+    return this.http.post(environment.url + "/addUserPicture/"  + this.getUserId(), fd, {headers})
+      .pipe(map(res => res))
+      .toPromise().then(data => {
+        return data
+      });
+  }
+
+  async getUserImage() {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/getUserPicture/' + this.getUserId(), {headers})
+      .pipe(map(res => res as Image)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  /**
+   * POST delete user picture
+   */
+  async postDeleteUserPicture(id: string) {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.post(environment.url + '/deleteUserPicture/' + id, '', {headers})
+      .pipe(map(res => res as boolean)).toPromise().then(data => {
         return data;
       });
   }

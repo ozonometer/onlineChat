@@ -28,10 +28,14 @@ export class ToastComponent implements OnInit {
         } else if (toast.response.status === 406) {
           this.errors.push('Username already in use!');
         } else {
-          if (toast.response.error.errors) {
-            for(let err in toast.response.error.errors){
-              this.errors.push(toast.response.error.errors[err].defaultMessage);
+          if (toast.response.error) {
+            if (toast.response.error.errors) {
+              for(let err in toast.response.error.errors){
+                this.errors.push(toast.response.error.errors[err].defaultMessage);
+              }
             }
+          } else {
+            this.errors.push(toast.message);
           }
         }
       } else if (toast.type === ToastType.SUCCESS) {
