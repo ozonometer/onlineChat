@@ -1,39 +1,61 @@
-<form>
-  <div class="form-row">
+<div class="row">
+  <div class="col">
+    <form>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="profileFirst">First name</label>
+          <input [(ngModel)]="user.firstName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileFirst" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="profileLast">Last name</label>
+          <input [(ngModel)]="user.lastName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileLast" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="profileUsername">Username</label>
+          <input [(ngModel)]="user.userName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileUsername" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="profilePassword">Password</label>
+          <input [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profilePassword" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="profileCity">City</label>
+          <input [(ngModel)]="user.city" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileCity" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="profileState">State/Province</label>
+          <input [(ngModel)]="user.state" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileState" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="profileZip">Zip/Postal Code</label>
+          <input [(ngModel)]="user.zip" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileZip" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="profileCountry">Country</label>
+          <input [(ngModel)]="user.country" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileCountry" required>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" (click)="updateUser()">Update</button>
+    </form>
+  </div>
+  <div class="col">
     <div class="col-md-4 mb-3">
-      <label for="profileFirst">First name</label>
-      <input [(ngModel)]="user.firstName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileFirst" required>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="profileLast">Last name</label>
-      <input [(ngModel)]="user.lastName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileLast" required>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="profileUsername">Username</label>
-      <input [(ngModel)]="user.userName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileUsername" required>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="profilePassword">Password</label>
-      <input [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profilePassword" required>
+      <div *ngIf="imageId">
+        <img style="background-color: #cccccc" height="348" width="348" src="data:image/png;base64, {{userImage}}"
+             alt="Profile Picture" class="img-thumbnail">
+        <button type="button" class="p-2 btn btn-dark" (click)="deleteImage()">Delete Image</button>
+      </div>
+      <div *ngIf="!imageId">
+        <img src="../../assets/avatar.png" height="348" width="348" class="img-thumbnail" alt="Add Profile Picture">
+        <button type="button" class="p-2 btn btn-dark" (click)="imageSelect.click()">Add Image</button>
+        <input
+          style="display: none"
+          type="file"
+          (change)="addImage($event)"
+          #imageSelect>
+      </div>
     </div>
   </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="profileCity">City</label>
-      <input [(ngModel)]="user.city" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileCity" required>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="profileState">State/Province</label>
-      <input [(ngModel)]="user.state" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileState" required>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="profileZip">Zip/Postal Code</label>
-      <input [(ngModel)]="user.zip" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileZip" required>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="profileCountry">Country</label>
-      <input [(ngModel)]="user.country" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="profileCountry" required>
-    </div>
-  </div>
-  <button class="btn btn-primary" type="submit" (click)="updateUser()">Update</button>
-</form>
+</div>
