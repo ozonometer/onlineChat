@@ -90,4 +90,17 @@ export class ProfileComponent implements OnInit {
       this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
     })
   }
+
+  toggleHide() {
+    let x = document.getElementById("profilePassword");
+    console.dir(x);
+    // @ts-ignore
+    if (x.type === "password") {
+      // @ts-ignore
+      x.type = "text";
+    } else {
+      // @ts-ignore
+      x.type = "password";
+    }
+  }
 }
