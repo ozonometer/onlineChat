@@ -25,3 +25,32 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+#Apache Web server config to prevent router 404 errors
+
+create .htaccess in /var/www/html
+be sure to have a <Directory /var/www/html/...> in your apache config
+ with a AllowOverride All
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+​
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !server-calls
+  RewriteRule . /index.html [L]
+</IfModule>
+
+in /etc/apache2/apache2.conf make sure for /var/www/ AllowOverride is set to All like this
+
+<Directory /var/www/>
+Options Indexes FollowSymLinks
+AllowOverride All
+Require all granted
+</Directory>
+
+Then
+sudo a2enmod rewrite
+sudo service apache2 restart
