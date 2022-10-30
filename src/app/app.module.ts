@@ -12,6 +12,9 @@ import { RegisterComponent } from './register/register.component';
 import { ToastComponent } from './toast/toast.component';
 import { ToastService } from './service/toast.service';
 import { ProfileComponent } from './profile/profile.component';
+import { MessageHomeComponent } from './message-home/message-home.component';
+import { MessageListComponent } from './message-list/message-list.component';
+import { MessageWindowComponent } from './message-window/message-window.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     RegisterComponent,
     ToastComponent,
-    ProfileComponent
+    ProfileComponent,
+    MessageHomeComponent,
+    MessageListComponent,
+    MessageWindowComponent
   ],
   imports: [
     BrowserModule,
