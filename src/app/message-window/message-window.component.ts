@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import {MessageService} from "../message.service";
+import {Subject} from "rxjs";
+
 
 @Component({
   selector: 'app-message-window',
   templateUrl: './message-window.component.html',
   styleUrls: ['./message-window.component.css']
 })
+
 export class MessageWindowComponent implements OnInit {
 
-  constructor() { }
+  constructor(public messageService: MessageService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

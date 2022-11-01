@@ -1,1 +1,19 @@
-<p>message-window works!</p>
+<h3>Start Chat</h3>
+<div id="send-component">
+  <button>
+  <label for="send-box">Send </label></button>
+  <input #sendBox id="send-box" (click)="messageService.add(sendBox.value);sendBox.value=''" />
+  <button
+    type="button"
+    class="clear"
+    (click)="messageService.clear()">Clear messages
+  </button>
+</div>
+
+<div *ngIf="messageService.messages.length">
+
+  <h2>Message Box</h2>
+  <div class="messageBox" *ngFor='let message of messageService.messages'> {{message}} </div>
+
+
+</div>
