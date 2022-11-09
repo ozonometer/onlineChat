@@ -2,6 +2,10 @@
   ...
 </div>
 <div class="border border-primary rounded col text-center p-2">
+  <input [(ngModel)]="message"/>
+  <button (click)="connectSocket()">Connect</button>
+  <button (click)="disconnect()">Disconnect</button>
+  <button (click)="send()">Send</button>
   <div class="row col text-center">
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let user of users;">
