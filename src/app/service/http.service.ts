@@ -8,6 +8,7 @@ import {AuthRequest} from "../model/AuthRequest";
 import {AuthResponse} from "../model/AuthResponse";
 import {NewUserModel} from "../model/NewUserModel";
 import {Image} from "../model/Image";
+import {AboutModel} from "../model/AboutModel";
 
 @Injectable( {providedIn: 'root'})
 export class HttpService {
@@ -141,6 +142,14 @@ export class HttpService {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.post(environment.url + '/deleteUserPicture/' + id, '', {headers})
       .pipe(map(res => res as boolean)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  async getAboutInfo() {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/about/backend', {headers})
+      .pipe(map(res => res as AboutModel)).toPromise().then(data => {
         return data;
       });
   }

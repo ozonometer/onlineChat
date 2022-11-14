@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { MessageHomeComponent } from './message-home/message-home.component';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageWindowComponent } from './message-window/message-window.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MessageWindowComponent } from './message-window/message-window.componen
     ProfileComponent,
     MessageHomeComponent,
     MessageListComponent,
-    MessageWindowComponent
+    MessageWindowComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
