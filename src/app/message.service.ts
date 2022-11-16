@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {UserModel} from "./model/UserModel";
 import {HttpService} from "./service/http.service";
+import { io } from "socket.io-client";
+
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -12,6 +14,8 @@ export class MessageService {
       this.currentUser = response!;
     })
   }
+  private socket = io('http://localhost:4200');
+
 
 
   add(message: string) {
