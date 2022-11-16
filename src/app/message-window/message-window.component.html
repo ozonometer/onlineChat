@@ -1,8 +1,11 @@
 <h3>Start Chat</h3>
 <div id="send-component">
-  <button>
-  <label for="send-box">Send </label></button>
-  <input #sendBox id="send-box" (click)="messageService.add(sendBox.value);sendBox.value=''" />
+  <button (click)="messageService.add(sendBox.value);">
+  <label for="send-box">Send </label>
+  </button>
+
+  <input #sendBox id="send-box"/>
+
   <button
     type="button"
     class="clear"
@@ -11,9 +14,6 @@
 </div>
 
 <div *ngIf="messageService.messages.length">
-
   <h2>Message Box</h2>
   <div class="messageBox" *ngFor='let message of messageService.messages'> {{message}} </div>
-
-
 </div>

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {MessageService} from "../message.service";
-import {Subject} from "rxjs";
-
 
 @Component({
   selector: 'app-message-window',
@@ -15,5 +13,6 @@ export class MessageWindowComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 }
