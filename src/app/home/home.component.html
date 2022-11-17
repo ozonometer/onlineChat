@@ -1,16 +1,42 @@
-<div class="well">
-  ...
-</div>
-<div class="border border-primary rounded col text-center p-2">
-  <input [(ngModel)]="message"/>
-  <button (click)="connectSocket()">Connect</button>
-  <button (click)="disconnect()">Disconnect</button>
-  <button (click)="send()">Send</button>
-  <div class="row col text-center">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let user of users;">
-        <div>User First Name:{{user.firstName}}</div>
-      </li>
-    </ul>
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <h5 class="card-title">Threads <span class="text-muted fw-normal ms-2">({{threads?.length}})</span></h5>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+        <div>
+          <button class="btn btn-primary" (click)="createNew()"><i class="bx bx-plus me-1"></i>Create New Thread</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="">
+        <div class="table-responsive">
+          <table class="table project-list-table table-nowrap align-middle table-borderless">
+            <thead>
+            <tr>
+              <th scope="col">Topic</th>
+              <th scope="col">Created By</th>
+              <th scope="col">Created on</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let thread of threads;">
+              <td><span class="badge badge-soft-success mb-0">{{thread?.threadName}}</span></td>
+              <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">{{thread.authorUserName}}</a></td>
+              <td>{{thread?.createdDate}}</td>
+              <td><button class="btn btn-primary" (click)="goToThread(thread.threadId)">Open</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

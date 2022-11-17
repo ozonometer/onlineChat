@@ -1,6 +1,5 @@
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpEventType, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {UserModel} from '../model/UserModel';
@@ -9,6 +8,8 @@ import {AuthResponse} from "../model/AuthResponse";
 import {NewUserModel} from "../model/NewUserModel";
 import {Image} from "../model/Image";
 import {AboutModel} from "../model/AboutModel";
+import {Thread} from "../model/Thread";
+import Utils from "../utils/Utils";
 
 @Injectable( {providedIn: 'root'})
 export class HttpService {
@@ -33,14 +34,6 @@ export class HttpService {
     return logged === 'true';
   }
 
-  getUserId(): number {
-    let userId = localStorage.getItem('userId');
-    if (userId) {
-      return Number(userId);
-    }
-    return 0;
-  }
-
   setUserId(id: number) {
     localStorage.setItem('userId', String(id));
   }
@@ -59,13 +52,14 @@ export class HttpService {
    * POST to authenticate user
    */
   async postAuthenticateUser(username: string, pass: string) {
+    localStorage.setItem('userName', username);
     let authRequest: AuthRequest = {
       userName: username,
       password: pass
     }
     return this.http.post(environment.url + '/authenticate', authRequest)
       .pipe(map(res => res as AuthResponse)).toPromise().then(data => {
-        console.log(data);
+        //console.log(data);
         return data;
       });
   }
@@ -96,7 +90,7 @@ export class HttpService {
    */
   async getUser() {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
-    return this.http.get(environment.url + '/user/' + this.getUserId(), {headers})
+    return this.http.get(environment.url + '/user/' + Utils.getUserId(), {headers})
       .pipe(map(res => res as UserModel)).toPromise().then(data => {
         return data;
       });
@@ -120,7 +114,7 @@ export class HttpService {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     const fd = new FormData();
     fd.append(type, file, file.name);
-    return this.http.post(environment.url + "/addUserPicture/"  + this.getUserId(), fd, {headers})
+    return this.http.post(environment.url + "/addUserPicture/"  + Utils.getUserId(), fd, {headers})
       .pipe(map(res => res))
       .toPromise().then(data => {
         return data
@@ -129,7 +123,7 @@ export class HttpService {
 
   async getUserImage() {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
-    return this.http.get(environment.url + '/getUserPicture/' + this.getUserId(), {headers})
+    return this.http.get(environment.url + '/getUserPicture/' + Utils.getUserId(), {headers})
       .pipe(map(res => res as Image)).toPromise().then(data => {
         return data;
       });
@@ -150,6 +144,36 @@ export class HttpService {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.get(environment.url + '/about/backend', {headers})
       .pipe(map(res => res as AboutModel)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  /**
+   * POST to create new thread
+   */
+  async postNewThread(newThread: Thread) {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.post(environment.url + '/threads/createThread', newThread, {headers})
+      .pipe(map(res => res as Thread)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  async getAllThreads() {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/threads/all', {headers})
+      .pipe(map(res => res as Array<Thread>)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  /**
+   * GET thead by id
+   */
+  async getThread() {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/threads/getThead/' + Utils.getThreadId(), {headers})
+      .pipe(map(res => res as Thread)).toPromise().then(data => {
         return data;
       });
   }

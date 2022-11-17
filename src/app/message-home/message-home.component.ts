@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-function randint(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
+import {ToastWrapper} from "../model/ToastWrapper";
+import {ToastType} from "../model/ToastType";
+import {HttpService} from "../service/http.service";
+import {WebsocketService} from "../service/websocket.service";
+import {Thread} from "../model/Thread";
+import {ToastService} from "../service/toast.service";
+import {UserModel} from "../model/UserModel";
+import {MessageService} from "../service/message.service";
+import Utils from "../utils/Utils";
 
 @Component({
   selector: 'app-message-home',
@@ -9,49 +15,42 @@ function randint(min: number, max: number) {
   styleUrls: ['./message-home.component.css']
 })
 export class MessageHomeComponent implements OnInit {
+  currentThread: Thread;
+  messages: string[] = [];
+  currentUser : UserModel;
+  message: string;
 
-  constructor() { }
-
-  msg( message: any, timestamp = Date.now()) {
-    return {
-      message,
-      timestamp,
-    }
-  }
-
-  send(msg: any) {
-    return this.msg(msg)
-  }
-  recv(msg: any) {
-    return this.msg(msg)
-  }
-
-  messages: any[] = []
-
-  msgInterval = randint(500, 1500)
-  msgs = [{
-    action: 'send',
-    msg: `Test`
-  },
-  ]
-
-  nextMsg() {
-    if (this.msgs.length) {
-      const msg = this.msgs[0]
-      this.messages.push((msg.msg))
-      this.msgs = this.msgs
-        .splice(1, this.msgs.length)
-    } else {
-      clearInterval(this.msgInterval)
-    }
-  }
+  constructor(private httpService: HttpService, private websocket: WebsocketService, private toastService: ToastService,
+              public messageService: MessageService) { }
 
   ngOnInit() {
-    this.nextMsg()
+    this.httpService.getUser().then(response => {
+      this.currentUser = response!;
+    })
+    this.httpService.getThread().then(response => {
+      this.currentThread = response!;
+      this.connectSocket();
+    }, err => {
+      this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
+    })
   }
 
   ngOnDestroy() {
-    clearInterval(this.msgInterval)
+    this.websocket._disconnect();
+  }
+
+  connectSocket() {
+    this.websocket._setPathVar(this.currentThread.threadId.toString())
+    this.websocket._connect();
+  }
+
+  send() {
+    let mesg = "{\"userId\":" + Utils.getUserId()
+      + ",\"userName\":\""+Utils.getUserName()
+      +"\",\"timeStamp\":\""+new Date().toLocaleTimeString()
+      +"\",\"message\":\""+this.message+"\"}";
+    this.websocket._send(mesg);
+    this.message = '';
   }
 
 }
