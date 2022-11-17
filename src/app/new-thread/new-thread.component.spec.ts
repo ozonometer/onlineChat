@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageListComponent } from './message-list.component';
+import { NewThreadComponent } from './new-thread.component';
 
-describe('MessageListComponent', () => {
-  let component: MessageListComponent;
-  let fixture: ComponentFixture<MessageListComponent>;
+describe('NewThreadComponent', () => {
+  let component: NewThreadComponent;
+  let fixture: ComponentFixture<NewThreadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MessageListComponent ]
+      declarations: [ NewThreadComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MessageListComponent);
+    fixture = TestBed.createComponent(NewThreadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

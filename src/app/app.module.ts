@@ -14,9 +14,8 @@ import { ToastComponent } from './toast/toast.component';
 import { ToastService } from './service/toast.service';
 import { ProfileComponent } from './profile/profile.component';
 import { MessageHomeComponent } from './message-home/message-home.component';
-import { MessageListComponent } from './message-list/message-list.component';
-import { MessageWindowComponent } from './message-window/message-window.component';
 import { AboutComponent } from './about/about.component';
+import { NewThreadComponent } from './new-thread/new-thread.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +27,8 @@ import { AboutComponent } from './about/about.component';
     ToastComponent,
     ProfileComponent,
     MessageHomeComponent,
-    MessageListComponent,
-    MessageWindowComponent,
-    AboutComponent
+    AboutComponent,
+    NewThreadComponent
   ],
   imports: [
     BrowserModule,
