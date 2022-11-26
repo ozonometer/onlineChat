@@ -14,6 +14,9 @@ export class HomeComponent implements OnInit {
   message: string;
   showModal: boolean = false;
   block: string;
+  keyword: string = '';
+  page: number = 1;
+  totalLength: any;
 
   constructor(private httpService: HttpService, private websocket: WebsocketService, private router: Router) {
   }
@@ -46,5 +49,11 @@ export class HomeComponent implements OnInit {
   goToThread(threadId: number) {
     localStorage.setItem('threadId', threadId.toString());
     this.router.navigate(['/message-home']);
+  }
+
+  searchKeyword() {
+    this.httpService.searchKeyword(this.keyword).then(response => {
+      this.threads = response!;
+    })
   }
 }

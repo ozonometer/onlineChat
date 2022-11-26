@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { MessageHomeComponent } from './message-home/message-home.component';
 import { AboutComponent } from './about/about.component';
 import { NewThreadComponent } from './new-thread/new-thread.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -30,12 +31,13 @@ import { NewThreadComponent } from './new-thread/new-thread.component';
     AboutComponent,
     NewThreadComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        NgxPaginationModule
+    ],
   providers: [ToastService],
   bootstrap: [AppComponent]
 })

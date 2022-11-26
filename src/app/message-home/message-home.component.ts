@@ -19,6 +19,7 @@ export class MessageHomeComponent implements OnInit {
   messages: string[] = [];
   currentUser : UserModel;
   message: string;
+  userImage: any;
 
   constructor(private httpService: HttpService, private websocket: WebsocketService, private toastService: ToastService,
               public messageService: MessageService) { }
@@ -30,6 +31,7 @@ export class MessageHomeComponent implements OnInit {
     this.httpService.getThread().then(response => {
       this.currentThread = response!;
       this.connectSocket();
+      this.getUserImage(this.currentThread.authorId);
     }, err => {
       this.toastService.emmitToast(new ToastWrapper(ToastType.ERROR, err, ''));
     })
@@ -53,4 +55,9 @@ export class MessageHomeComponent implements OnInit {
     this.message = '';
   }
 
+  getUserImage(id:number){
+    this.httpService.getUserImageById(id).then(response => {
+      this.userImage = response?.image;
+    })
+  }
 }
