@@ -1,5 +1,5 @@
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {UserModel} from '../model/UserModel';
@@ -128,6 +128,14 @@ export class HttpService {
         return data;
       });
   }
+  async getUserImageById(id: number) {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
+    return this.http.get(environment.url + '/getUserPicture/' + id, {headers})
+      .pipe(map(res => res as Image)).toPromise().then(data => {
+        return data;
+      });
+  }
+
 
   /**
    * POST delete user picture
@@ -174,6 +182,16 @@ export class HttpService {
     const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()})
     return this.http.get(environment.url + '/threads/getThead/' + Utils.getThreadId(), {headers})
       .pipe(map(res => res as Thread)).toPromise().then(data => {
+        return data;
+      });
+  }
+
+  async searchKeyword(keyword: string) {
+    const headers = new HttpHeaders({Authorization: 'Token ' + this.getToken()});
+    const params = new HttpParams()
+      .set('keyword', keyword);
+    return this.http.post(environment.url + '/threads/find', params,{headers})
+      .pipe(map(res => res as Array<Thread>)).toPromise().then(data => {
         return data;
       });
   }
