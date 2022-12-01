@@ -1,3 +1,8 @@
+/*
+Requirement 1.1 Main Page
+Requirement 1.1.1 User Authentication
+Requirement 1.1.2 User Registration
+ */
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../service/http.service";
 import {AuthResponse} from "../model/AuthResponse";
@@ -24,6 +29,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*
+  Uses HTTP service to authenticate user.
+  Uses toast service to post login response message.
+  */
   userLogin() {
     this.toastService.clearToastMessages();
     this.httpService.postAuthenticateUser(this.username, this.password).then(response => {

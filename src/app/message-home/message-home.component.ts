@@ -1,3 +1,9 @@
+/*
+Requirement 1.2 User Authenticated
+Requirement 1.2.3 User can leave comments.
+Requirement 1.2.4 Refresh not required for new comments.
+Requirement 1.2.5 Include pictures in the comment section.
+ */
 import { Component, OnInit } from '@angular/core';
 import {ToastWrapper} from "../model/ToastWrapper";
 import {ToastType} from "../model/ToastType";

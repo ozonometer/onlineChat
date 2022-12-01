@@ -1,3 +1,8 @@
+/*
+Requirement 1.4 User Profile
+Requirement 1.4.1 Upload an avatar.
+Requirement 1.4.2 update user information.
+ */
 import { Component, OnInit } from '@angular/core';
 import {UserModel} from "../model/UserModel";
 import {HttpService} from "../service/http.service";

@@ -1,3 +1,6 @@
+/*
+Service enables live chat.
+ */
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })

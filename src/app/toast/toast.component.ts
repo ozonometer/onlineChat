@@ -1,3 +1,6 @@
+/*
+Response for success, errors, and information messages to the user.
+ */
 import { Component, OnInit } from '@angular/core';
 import {ToastService} from '../service/toast.service';
 import {ToastType} from '../model/ToastType';
