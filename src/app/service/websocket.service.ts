@@ -1,3 +1,6 @@
+/*
+Service for websocket functions.
+ */
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import { Stomp } from '@stomp/stompjs';

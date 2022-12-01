@@ -1,3 +1,6 @@
+/*
+Service for toast messages.
+ */
 import {EventEmitter, Injectable} from '@angular/core';
 import {ToastWrapper} from '../model/ToastWrapper';
 

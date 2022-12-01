@@ -1,3 +1,7 @@
+/*
+Requirement 1.2 User Authenticated
+Requirement 1.2.1 User will have the option to create new thread.
+ */
 import { Component, OnInit } from '@angular/core';
 import {Thread} from "../model/Thread";
 import {HttpService} from "../service/http.service";
